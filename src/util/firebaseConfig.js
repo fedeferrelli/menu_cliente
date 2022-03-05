@@ -20,3 +20,14 @@ const app = initializeApp(firebaseConfig);
 // Initialize FireStore
 const db = getFirestore(app);
 
+// setData function
+export const setData = async (data) => {
+    try {
+        await addDoc(collection(db, 'platos'), data);
+        console.log('Ok')
+        
+      } catch (err) {
+        console.error("Ocurrió un error al cargar el plato: ", err);
+      
+    }
+  };
