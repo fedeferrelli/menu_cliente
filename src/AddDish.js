@@ -12,6 +12,7 @@ function AddDish() {
       categoria: "",
       descripcion: "",
       precio: "",
+      tags:""
     },
 
     //Validación de datos del form con librería YUP
@@ -43,6 +44,8 @@ function AddDish() {
           tags: tags,
           stock: "Si",
         });
+
+        formik.resetForm();
    
     },
   });
@@ -75,7 +78,7 @@ function AddDish() {
             name="plato"
             id="plato"
             placeholder="Nombre"
-            className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-1 rounded-sm "
+            className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm "
             onChange={formik.handleChange}
             value={formik.values.plato}
           ></input>
@@ -95,7 +98,7 @@ function AddDish() {
             name="categoria"
             id="categoria"
             placeholder="A qué parte del menú pertenece?"
-            className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-1 rounded-sm "
+            className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm "
             onChange={formik.handleChange}
             value={formik.values.categoria}
           ></input>
@@ -115,8 +118,9 @@ function AddDish() {
             name="descripcion"
             id="descripcion"
             placeholder="Qué hace a este plato tan delicioso?"
-            className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-1 rounded-sm"
+            className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm"
             onChange={formik.handleChange}
+            value={formik.values.descripcion}
           ></textarea>
           <p className="text-red-300">{formik.errors.descripcion}</p>
         </div>
@@ -134,8 +138,9 @@ function AddDish() {
             name="precio"
             id="precio"
             placeholder='No agregues el "$"'
-            className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-1 rounded-sm"
+            className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm"
             onChange={formik.handleChange}
+            value={formik.values.precio}
           ></input>
           <p className="text-red-300">{formik.errors.precio}</p>
         </div>
@@ -153,15 +158,16 @@ function AddDish() {
             name="tags"
             id="tags"
             placeholder='Agregá palabras para que encuentren más fácil el plato'
-            className="w-full text-black border border-gray-400 outline-none focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-1 rounded-sm"
+            className="w-full text-black border border-gray-400 outline-none focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm"
             onChange={formik.handleChange}
+            value={formik.values.tags}
           ></textarea>
           
         </div>
 
         <button
           type="submit"
-          className="w-full h-12 rounded-sm px-6 py-2 mt-10 bg-green-700 font-bold uppercase text-white shadow-lg hover:bg-green-800 cursor-pointer"
+          className=" w-full h-12 rounded-sm px-6 py-2 mt-10 bg-green-700 font-bold uppercase text-white shadow-lg hover:bg-green-800 cursor-pointer"
         >
           {" "}
           Cargar Plato{" "}
