@@ -1,12 +1,10 @@
-
+import AddDish from "./AddDish";
 
 function App() {
   return (
     <div >
-      <h1>
-        Nuevo Proyecto!!!
-        New Project!!!
-      </h1>
+      <AddDish/>
+       
     </div>
   );
 }
