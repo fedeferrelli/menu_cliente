@@ -3,6 +3,8 @@ import { collection, addDoc } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 
 import { getFirestore } from "firebase/firestore";
+import { getStorage} from "firebase/storage";
+
 
 
 const firebaseConfig = {
@@ -15,10 +17,10 @@ const firebaseConfig = {
   };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 
 // Initialize FireStore
-const db = getFirestore(app);
+export const db = getFirestore(app);
 
 // setData function
 export const setData = async (data) => {
@@ -31,3 +33,8 @@ export const setData = async (data) => {
       
     }
   };
+
+
+  export const storage = getStorage(app);
+ 
+

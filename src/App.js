@@ -1,9 +1,11 @@
 import AddDish from "./AddDish";
+import Dishes from "./Dishes";
 
 function App() {
   return (
     <div >
-      <AddDish/>
+     <AddDish/>
+      <Dishes/>
        
     </div>
   );

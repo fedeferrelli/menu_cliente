@@ -1,10 +1,12 @@
-import React from "react";
-import { setData } from "./util/firebaseConfig";
+import React, {useState} from "react";
+import { setData, storage} from "./util/firebaseConfig";
+import {getDownloadURL, uploadBytesResumable, ref} from '@firebase/storage'
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
+
 function AddDish() {
- 
+
 
   const formik = useFormik({
     initialValues: {
@@ -34,6 +36,10 @@ function AddDish() {
 
     onSubmit: (formData) => {
 
+      if (url===''){setImageError(true)}
+
+      else{
+
         const {plato, categoria, descripcion, precio, tags} = formData;
      
         setData({
@@ -41,14 +47,58 @@ function AddDish() {
           categoria: categoria,
           descripcion: descripcion,
           precio: precio,
+          url: url,
           tags: tags,
           stock: "Si",
         });
 
         formik.resetForm();
-   
+        setProgress('')
+      }
     },
   });
+
+
+  // Images treatment
+
+
+const [progress, setProgress] = useState('')
+const [url, setURL] = useState('')
+
+const [imageError, setImageError] = useState(false)
+
+
+const formImageHandler = (e) =>{
+  e.preventDefault();
+  
+  const file = e.target[0].files[0]
+
+  uploadFile (file)
+
+
+}
+
+const uploadFile = (file) =>{
+
+  if (!file) return;
+
+  const imageRef = ref(storage, `platos_img/${Math.random()}`)
+
+  const uploadTask = uploadBytesResumable(imageRef, file)
+
+  uploadTask.on("state_changed", (snapshot)=>{
+    const prog = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) *100)
+
+      setProgress(prog) 
+
+  },
+  (err) => console.log(err),
+  ()=>{ getDownloadURL(uploadTask.snapshot.ref).then((url)=>setURL(url)) }
+  
+  )
+
+  setImageError(false)
+}
 
   return (
     <div className="w-full py-8 flex flex-col justify-center items-center bg-slate-100">
@@ -60,6 +110,34 @@ function AddDish() {
           nuevo plato
         </span>
       </h1>
+
+
+      <div>
+
+      <form onSubmit={formImageHandler} className="w-full px-4 flex flex-col justify-center items-center">
+          <label
+            htmlFor="image"
+            className="w-full font-bold ease-in-out duration-300 text-gray-500 focus-within:text-violet-700"
+          >
+            {" "}
+            Imagen
+          </label>
+          <div className="w-full text-black border bg-white border-gray-400 outline-none focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm">
+          <input
+            type="file"
+            accept="image/*"
+            name="image"
+            id="image"
+            className="w-full py-1"
+            
+           
+          ></input>
+          
+          <button  type="submit" className={progress === '' ? "w-full h-10 bg-orange-600 text-white font-bold" : progress === 100 ? "w-full h-10 text-white font-bold bg-green-700/90" : "w-full h-10 text-white font-bold bg-yellow-400/70"}>
+          {progress === '' ? "Cargar foto" : progress === 100 ? "Foto cargada" : `Cargando: ${progress}%` }</button> 
+          </div>
+          { imageError===true &&  <p className="text-red-300">Recuerda cargar una imagen</p>}
+        </form>
 
       <form
         className="w-full px-4 flex flex-col justify-center items-center"
@@ -82,7 +160,7 @@ function AddDish() {
             onChange={formik.handleChange}
             value={formik.values.plato}
           ></input>
-          <p className="text-red-300">{formik.errors.plato}</p>
+           { formik.touched.plato && <p className="text-red-300">{formik.errors.plato}</p>}
         </div>
 
         <div className="mt-8 w-full text-gray-500 focus-within:text-violet-700">
@@ -102,7 +180,7 @@ function AddDish() {
             onChange={formik.handleChange}
             value={formik.values.categoria}
           ></input>
-          <p className="text-red-300">{formik.errors.categoria}</p>
+          { formik.touched.categoria && <p className="text-red-300">{formik.errors.categoria}</p>}
         </div>
 
         <div className="mt-8 w-full text-gray-500 focus-within:text-violet-700">
@@ -122,7 +200,7 @@ function AddDish() {
             onChange={formik.handleChange}
             value={formik.values.descripcion}
           ></textarea>
-          <p className="text-red-300">{formik.errors.descripcion}</p>
+           { formik.touched.descripcion && <p className="text-red-300">{formik.errors.descripcion}</p>}
         </div>
 
         <div className="mt-8 w-full text-gray-500 focus-within:text-violet-700">
@@ -142,7 +220,7 @@ function AddDish() {
             onChange={formik.handleChange}
             value={formik.values.precio}
           ></input>
-          <p className="text-red-300">{formik.errors.precio}</p>
+           { formik.touched.precio && <p className="text-red-300">{formik.errors.precio}</p>}
         </div>
 
         <div className="mt-8 w-full text-gray-500 focus-within:text-violet-700">
@@ -173,6 +251,11 @@ function AddDish() {
           Cargar Plato{" "}
         </button>
       </form>
+
+
+
+
+        </div>
     </div>
   );
 }
