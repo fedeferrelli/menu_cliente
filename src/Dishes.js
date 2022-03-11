@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import { getData, db } from './util/firebaseConfig';
-import { getFirestore, doc, onSnapshot, getDoc, getDocs } from "firebase/firestore";
-import { collection, addDoc } from "firebase/firestore";
-import { FirebaseError } from 'firebase/app';
+import {db } from './util/firebaseConfig';
+import {getDocs } from "firebase/firestore";
+import { collection } from "firebase/firestore";
+
 
 import ShowDish from './ShowDish';
 
