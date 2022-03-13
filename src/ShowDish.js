@@ -1,13 +1,13 @@
 import React from "react";
 
 function ShowDish({ dish }) {
-  const { url, plato, descripcion, precio, categoria } = dish;
+  const { image, plato, descripcion, precio, categoria } = dish;
   return (
-    <div className="w-full sm:w-1/5   sm:h-96 flex flex-col sm:flex-col overflow-hidden my-4 mx-2 box-border rounded-md shadow-lg border border-gray-400 bg-gray-100">
+    <div className="w-full sm:w-full   sm:h-96 flex flex-col sm:flex-col overflow-hidden my-4 mx-0 box-border rounded-md shadow-lg border border-gray-400 bg-gray-100">
      
      <div  className="w-full sm:w-full  flex flex-row sm:flex-col overflow-hidden box-border ">
       <img
-        src={url}
+        src={image}
         className="min-w-28 sm:w-40 h-28 sm:h-40 p-1 rounded-md  "
         alt="plato_img"
       />
@@ -28,9 +28,9 @@ function ShowDish({ dish }) {
       </div>
 
       <div className="flex flex-row justify-evenly py-2 text-grey-500">
-      <div className="w-1/4 h-8 rounded-md text-center flex border border-green-700 bg-green-100" ><div className="m-auto">Stock</div></div>
-      <div className="w-1/4 h-8 rounded-md text-center flex border border-blue-700 bg-blue-100"><div className="m-auto"> modificar </div></div>
-      <div className="w-1/4 w- h-8 rounded-md  text-center flex border border-red-700 bg-red-100"><div className="m-auto">eliminar</div></div>
+      <div className="w-1/4 h-8 rounded-md text-center flex border border-green-700 bg-gray-200" ><div className="m-auto">Stock</div></div>
+      <div className="w-1/4 h-8 rounded-md text-center flex border border-blue-700 bg-gray-200"><div className="m-auto"> modificar </div></div>
+      <div className="w-1/4 w- h-8 rounded-md  text-center flex border border-red-700 bg-gray-200"><div className="m-auto">eliminar</div></div>
      
       </div>
     </div>
