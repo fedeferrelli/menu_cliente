@@ -65,14 +65,14 @@ useEffect(() => {
 
     if(categoriaAnterior!==_.lowerCase(categoria)){
         return(
-            <h1 className="text-violet-700 font-bold font-sans text-2xl text-left mt-10 mb-1 border-t border-violet-700 capitalize" >{categoria} </h1>
+            <div className="text-white bg-violet-600 font-bold font-sans text-2xl text-center  capitalize rounded-md" >{categoria} </div>
         )
     }
 else return
 }
     else{
         return(
-            <h1 className="text-violet-700 font-bold font-sans text-2xl text-left  mt-2 mb-1 capitalize" >{categoria} </h1>
+            <div className="text-white bg-violet-600 font-bold font-sans text-2xl text-center  capitalize rounded-md" >{categoria} </div>
 
         )
     }
@@ -97,8 +97,8 @@ modificar={modificar}
 idModificar={idModificar}
 infoModificar={infoModificar}/> 
 : 
-<>
-<h1 className="font-bold px-8 w-full text-center text-gray-700 text-xl">
+< div className="bg-gray-800 ">
+<h1 className="font-bold px-8 w-full text-center text-white text-xl py-6">
         {" "}
         Acá podés ver{" "}
         <span className="text-2xl block uppercase text-violet-600">
@@ -107,7 +107,7 @@ infoModificar={infoModificar}/>
         </span>
       </h1>
 
-        <div className="mb-4 bg-white/75 px-2  sticky top-0">
+        <div className="mb-4 bg-white/75 px-2  sticky top-0 bg-gray-800">
 
 
     
@@ -126,7 +126,7 @@ infoModificar={infoModificar}/>
         <div className="flex flex-wrap justify-center w-full">
          {datos.map((dish,i) =>(
          <div key={Math.random()} className="w-full px-2 sm:w-1/5">   
-          <div className="sticky top-10">
+          <div className="sticky top-11">
           
           { MostrarCategoria(dish.categoria, i)}
            </div>
@@ -144,7 +144,7 @@ infoModificar={infoModificar}/>
 <div className="w-12 h-12 rounded-full bg-violet-700 fixed bottom-3 right-3 flex justify-center shadow-2xl shadow-black"><h1 className="m-auto text-white text-2xl text-center  align-middle"
 onClick={()=>navigate('/addDish')}
 >+</h1></div>
-</>
+</div>
 }
       </>  
     )
