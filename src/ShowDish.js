@@ -1,7 +1,32 @@
 import React from "react";
+import firebase from './util/firebaseConfig'; 
 
-function ShowDish({ dish }) {
-  const { image, plato, descripcion, precio, categoria } = dish;
+function ShowDish({ dish, setModificar, modificar, setIdModificar, setInfoModificar }) {
+  const { image, plato, descripcion, precio, id } = dish;
+
+// funcion para eliminar plato
+  const eliminarPlato=(id)=>{
+
+    if(window.confirm(`¿estás seguro que queres elminar ${plato}?`) )
+        
+      { try {
+          firebase.db.collection('platos').doc(id).delete().then(function() {
+            // File deleted successfully
+              });
+      } catch (error) {
+          console.log(error)    
+      }}       
+    }
+
+     // funcion para modificar plato
+const modificarPlato = (id) => {
+  setModificar(!modificar)
+  setIdModificar(id)
+  setInfoModificar({dish})
+     
+  } 
+
+
   return (
     <div className="w-full sm:w-full   sm:h-96 flex flex-col sm:flex-col overflow-hidden my-4 mx-0 box-border rounded-md shadow-lg border border-gray-400 bg-gray-100">
      
@@ -29,8 +54,8 @@ function ShowDish({ dish }) {
 
       <div className="flex flex-row justify-evenly py-2 text-grey-500">
       <div className="w-1/4 h-8 rounded-md text-center flex border border-green-700 bg-gray-200" ><div className="m-auto">Stock</div></div>
-      <div className="w-1/4 h-8 rounded-md text-center flex border border-blue-700 bg-gray-200"><div className="m-auto"> modificar </div></div>
-      <div className="w-1/4 w- h-8 rounded-md  text-center flex border border-red-700 bg-gray-200"><div className="m-auto">eliminar</div></div>
+      <div className="w-1/4 h-8 rounded-md text-center flex border border-blue-700 bg-gray-200" onClick={()=>modificarPlato(id)}><div className="m-auto"> modificar </div></div>
+      <div className="w-1/4 w- h-8 rounded-md  text-center flex border border-red-700 bg-gray-200" onClick={()=>eliminarPlato(id)}><div className="m-auto">eliminar</div></div>
      
       </div>
     </div>

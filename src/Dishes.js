@@ -6,12 +6,28 @@ import firebase from './util/firebaseConfig';
 
 import ShowDish from './ShowDish';
 
+import ModificarPlato from './ModificarPlato';
+
 import _ from "lodash";
 
 function Dishes() {
 
 const [datos, setDatos] = useState([])
 const [filtro, setFiltro] = useState('')
+
+
+
+
+
+
+const [modificar, setModificar] = useState(false)
+
+const [idModificar, setIdModificar] = useState('')
+
+const [infoModificar, setInfoModificar] = useState({})
+
+
+
 
 
 useEffect(() => {
@@ -66,7 +82,21 @@ else return
  
  const navigate = useNavigate();
 
-    return (
+
+
+
+return (
+
+
+
+<>
+
+{modificar ? <ModificarPlato
+setModificar={setModificar}
+modificar={modificar}
+idModificar={idModificar}
+infoModificar={infoModificar}/> 
+: 
 <>
 <h1 className="font-bold px-8 w-full text-center text-gray-700 text-xl">
         {" "}
@@ -96,11 +126,17 @@ else return
         <div className="flex flex-wrap justify-center w-full">
          {datos.map((dish,i) =>(
          <div key={Math.random()} className="w-full px-2 sm:w-1/5">   
-          <div>
+          <div className="sticky top-10">
           
           { MostrarCategoria(dish.categoria, i)}
            </div>
-          <ShowDish  dish={dish}/>
+          <ShowDish  
+          dish={dish}
+          setModificar={setModificar}
+          modificar={modificar}
+          setIdModificar={setIdModificar}
+          setInfoModificar={setInfoModificar}
+          />
           </div>
          ))}
         </div>
@@ -108,6 +144,8 @@ else return
 <div className="w-12 h-12 rounded-full bg-violet-700 fixed bottom-3 right-3 flex justify-center shadow-2xl shadow-black"><h1 className="m-auto text-white text-2xl text-center  align-middle"
 onClick={()=>navigate('/addDish')}
 >+</h1></div>
+</>
+}
       </>  
     )
 }
