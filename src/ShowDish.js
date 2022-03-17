@@ -43,13 +43,11 @@ const modificarPlato = (id) => {
 
   return (
     <div className={ dish.existencia === 'si' ? 
-    "w-full  sm:w-full  sm:h-96 flex flex-col sm:flex-col overflow-hidden my-4 mx-0 box-border rounded-md shadow-lg border border-gray-400 bg-gray-100" 
+    "w-full  sm:w-full  sm:h-96 flex flex-col sm:flex-col overflow-hidden my-4 mx-0 box-border rounded-md shadow-lg border border-gray-400 bg-gray-300" 
      : 
     "w-full  sm:w-full  sm:h-96 flex flex-col sm:flex-col overflow-hidden my-4 mx-0 box-border rounded-md shadow-lg border border-gray-400 bg-red-200 "} >
   
-     <div  className="w-full sm:w-full  flex flex-row sm:flex-col overflow-hidden box-border "
-     
-     >
+     <div  className="w-full sm:w-full  flex flex-row sm:flex-col overflow-hidden box-border">
 
 
 

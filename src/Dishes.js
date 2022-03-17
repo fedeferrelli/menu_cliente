@@ -95,7 +95,7 @@ modificar={modificar}
 idModificar={idModificar}
 infoModificar={infoModificar}/> 
 : 
-< div className="bg-gray-800 min-h-screen">
+< div className="bg-gray-800 min-h-screen pb-16">
 <h1 className="font-bold px-8 w-full text-center text-white text-xl py-6">
         {" "}
         Acá podés ver{" "}
@@ -110,7 +110,7 @@ infoModificar={infoModificar}/>
 
     
 
-        <input className="shadow italic appearance-none border rounded w-full py-3 px-3 mt-1 text-gray-700 leading-tight focus:outline-none focus:border-violet-700 focus:shadow-none "
+        <input className="shadow italic appearance-none border rounded w-full py-3 px-3 mt-1 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:border-violet-700 focus:shadow-none "
         id="buscar"
         type="text"
         placeholder="Buscar"
@@ -139,7 +139,7 @@ infoModificar={infoModificar}/>
          ))}
         </div>
 
-<div className="w-12 h-12 rounded-full bg-violet-700 fixed bottom-3 right-3 flex justify-center shadow-2xl shadow-black"><h1 className="m-auto text-white text-2xl text-center  align-middle"
+<div className="w-14 h-14 rounded-full bg-violet-700 fixed bottom-3 right-3 flex justify-center shadow-lg shadow-gray-500"><h1 className="m-auto text-white text-2xl text-center  align-middle"
 onClick={()=>navigate('/addDish')}
 >+</h1></div>
 </div>
