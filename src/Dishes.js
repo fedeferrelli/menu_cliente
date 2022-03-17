@@ -52,9 +52,7 @@ useEffect(() => {
 
      const platos_filtrados = _.filter(dishes_list, dish => _.includes(_.lowerCase([ dish.categoria, dish.plato, dish.descripcion, dish.tags, dish.precio]), _.lowerCase(filtro)));
      const platos_sorteados = _.sortBy(platos_filtrados, 'categoria', 'plato');
-     setDatos(platos_sorteados)
-
-     
+     setDatos(platos_sorteados)   
  }
 
 
@@ -65,14 +63,14 @@ useEffect(() => {
 
     if(categoriaAnterior!==_.lowerCase(categoria)){
         return(
-            <div className="text-white bg-violet-600 font-bold font-sans text-2xl text-center  capitalize rounded-md" >{categoria} </div>
+            <div className="text-white bg-violet-600 font-bold font-sans text-2xl text-center  capitalize rounded-md py-2 mt-1 z-50" >{categoria} </div>
         )
     }
 else return
 }
     else{
         return(
-            <div className="text-white bg-violet-600 font-bold font-sans text-2xl text-center  capitalize rounded-md" >{categoria} </div>
+            <div className="text-white bg-violet-600 font-bold font-sans text-2xl text-center  capitalize rounded-md py-2 z-50" >{categoria} </div>
 
         )
     }
@@ -97,7 +95,7 @@ modificar={modificar}
 idModificar={idModificar}
 infoModificar={infoModificar}/> 
 : 
-< div className="bg-gray-800 ">
+< div className="bg-gray-800 min-h-screen">
 <h1 className="font-bold px-8 w-full text-center text-white text-xl py-6">
         {" "}
         Acá podés ver{" "}
@@ -107,12 +105,12 @@ infoModificar={infoModificar}/>
         </span>
       </h1>
 
-        <div className="mb-4 bg-white/75 px-2  sticky top-0 bg-gray-800">
+        <div className="mb-4 bg-white/75 px-2  sticky top-0 z-50 bg-gray-900">
 
 
     
 
-        <input className="shadow italic appearance-none border rounded w-full py-2 px-3 mt-1 text-gray-700 leading-tight focus:outline-none focus:border-violet-700 focus:shadow-none "
+        <input className="shadow italic appearance-none border rounded w-full py-3 px-3 mt-1 text-gray-700 leading-tight focus:outline-none focus:border-violet-700 focus:shadow-none "
         id="buscar"
         type="text"
         placeholder="Buscar"
@@ -126,7 +124,7 @@ infoModificar={infoModificar}/>
         <div className="flex flex-wrap justify-center w-full">
          {datos.map((dish,i) =>(
          <div key={Math.random()} className="w-full px-2 sm:w-1/5">   
-          <div className="sticky top-11">
+          <div className="sticky top-14">
           
           { MostrarCategoria(dish.categoria, i)}
            </div>

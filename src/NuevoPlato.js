@@ -55,7 +55,7 @@ const NuevoPlato = () => {
 
     onSubmit: (plato) => {
       try {
-        plato.existencia = true;
+        plato.existencia = "si";
         plato.image = urlimagen;
         firebase.db.collection("platos").add(plato);
         formik.resetForm();

@@ -7,7 +7,7 @@ function ShowDish({ dish, setModificar, modificar, setIdModificar, setInfoModifi
 // funcion para eliminar plato
   const eliminarPlato=(id)=>{
 
-    if(window.confirm(`¿estás seguro que queres elminar ${plato}?`) )
+    if(window.confirm(`¿estás seguro que queres eliminar ${plato}?`) )
         
       { try {
           firebase.db.collection('platos').doc(id).delete().then(function() {
@@ -27,10 +27,32 @@ const modificarPlato = (id) => {
   } 
 
 
+  const cambiarStock = (id, dish) => {
+    if (dish.existencia === "si") {
+      dish.existencia = "no";
+    } else {
+      dish.existencia = "si";
+    }
+
+    try {
+      firebase.db.collection("platos").doc(id).update(dish);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <div className="w-full sm:w-full   sm:h-96 flex flex-col sm:flex-col overflow-hidden my-4 mx-0 box-border rounded-md shadow-lg border border-gray-400 bg-gray-100">
+    <div className={ dish.existencia === 'si' ? 
+    "w-full  sm:w-full  sm:h-96 flex flex-col sm:flex-col overflow-hidden my-4 mx-0 box-border rounded-md shadow-lg border border-gray-400 bg-gray-100" 
+     : 
+    "w-full  sm:w-full  sm:h-96 flex flex-col sm:flex-col overflow-hidden my-4 mx-0 box-border rounded-md shadow-lg border border-gray-400 bg-red-200 "} >
+  
+     <div  className="w-full sm:w-full  flex flex-row sm:flex-col overflow-hidden box-border "
      
-     <div  className="w-full sm:w-full  flex flex-row sm:flex-col overflow-hidden box-border ">
+     >
+
+
+
       <img
         src={image}
         className="min-w-28 sm:w-40 h-28 sm:h-40 p-1 rounded-md  "
@@ -53,7 +75,13 @@ const modificarPlato = (id) => {
       </div>
 
       <div className="flex flex-row justify-evenly py-2 text-grey-500">
-      <div className="w-1/4 h-8 rounded-md text-center flex border border-green-700 bg-gray-200" ><div className="m-auto">Stock</div></div>
+      <div className=
+      { dish.existencia==='si' ?
+      "w-1/4 h-8 rounded-md text-center flex border border-green-700 bg-gray-200"
+    :
+    "w-1/4 h-8 rounded-md text-center text-white flex border border-red-700 bg-red-500"
+  }
+      onClick={()=>cambiarStock(id, dish)} ><div className="m-auto">{dish.existencia==='si' ? 'En Stock' : 'Sin Stock'}</div></div>
       <div className="w-1/4 h-8 rounded-md text-center flex border border-blue-700 bg-gray-200" onClick={()=>modificarPlato(id)}><div className="m-auto"> modificar </div></div>
       <div className="w-1/4 w- h-8 rounded-md  text-center flex border border-red-700 bg-gray-200" onClick={()=>eliminarPlato(id)}><div className="m-auto">eliminar</div></div>
      
