@@ -3,10 +3,11 @@ import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-import firebase from "./util/firebaseConfig";
+import firebase from "../../util/Firebase/firebaseConfig";
 import { useNavigate } from 'react-router-dom';
 import FileUploader from "react-firebase-file-uploader";
 import _ from "lodash";
+import { Fade } from "react-awesome-reveal";
 
 const NuevoPlato = () => {
 
@@ -80,11 +81,12 @@ const [categorias, setCategorias] = useState([])
         plato.image = urlimagen;
         firebase.db.collection("platos").add(plato);
         formik.resetForm();
+        navigate('/');
        
       } catch (error) {
         console.log(error);
       }
-      navigate('/');
+     
     },
   });
 
@@ -118,8 +120,8 @@ const [categorias, setCategorias] = useState([])
   const navigate  = useNavigate();
 
   return (
-    <>
-      <h1 className="font-bold px-8 w-full text-center text-gray-700 text-xl">
+    <Fade triggerOnce>
+      <h1 className="bg-gray-800 font-bold px-8 pt-6 w-full text-center text-gray-100 tracking-wider text-xl">
         {" "}
         Acá podés ingresar un{" "}
         <span className="text-2xl block uppercase text-violet-600">
@@ -128,7 +130,7 @@ const [categorias, setCategorias] = useState([])
         </span>
       </h1>
 
-      <div className="flex justify-center mt-12">
+      <div className="flex justify-center py-12 bg-gray-800">
         <div className=" w-full max-w-2xl">
           <form
             className="w-full px-4 flex flex-col justify-center items-center"
@@ -137,7 +139,7 @@ const [categorias, setCategorias] = useState([])
             {/* IMAGEN */}
             <div className="w-full text-gray-500 focus-within:text-violet-700">
               <label
-                className="w-full font-bold ease-in-out duration-300"
+                className="w-full font-bold ease-in-out duration-300 text-gray-100 tracking-wider"
                 htmlFor="imagen"
               >
                 Imagen
@@ -152,7 +154,7 @@ const [categorias, setCategorias] = useState([])
                 onUploadStart={handleUploadStart}
                 onUploadError={handleUploadError}
                 onUploadSuccess={handleUploadSuccess}
-                className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm "
+                className="w-full text-black border bg-gray-100 border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm "
               />
             </div>
 
@@ -177,14 +179,14 @@ const [categorias, setCategorias] = useState([])
             {/* PLATO */}
             <div className="mt-6 w-full text-gray-500 focus-within:text-violet-700">
               <label
-                className="w-full font-bold ease-in-out duration-300"
+                className="w-full font-bold ease-in-out duration-300 text-gray-100 tracking-wider"
                 htmlFor="plato"
               >
                 Plato
               </label>
 
               <input
-                className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm "
+                className="w-full bg-gray-100 text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm "
                 id="plato"
                 type="text"
                 placeholder="Nombre"
@@ -207,14 +209,14 @@ const [categorias, setCategorias] = useState([])
             {/* DESCRIPCION */}
             <div className="mt-6 w-full text-gray-500 focus-within:text-violet-700">
               <label
-                className="w-full font-bold ease-in-out duration-300"
+                className="w-full font-bold ease-in-out duration-300 text-gray-100 tracking-wider"
                 htmlFor="descripcion"
               >
                 Descripción del plato
               </label>
 
               <textarea
-                className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm"
+                className="w-full bg-gray-100 text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm"
                 id="descripcion"
                 type="text"
                 placeholder="Descripción"
@@ -238,7 +240,7 @@ const [categorias, setCategorias] = useState([])
             {/* CATEGORIA SELECT */}
             <div className="mt-6 w-full text-gray-500 focus-within:text-violet-700">
               <label
-                className="w-full font-bold ease-in-out duration-300"
+                className="w-full font-bold ease-in-out duration-300 text-gray-100 tracking-wider"
                 htmlFor="categoria_select"
               >
                 Categoría
@@ -247,7 +249,7 @@ const [categorias, setCategorias] = useState([])
               <select
                 name="categoria"
                 id="categoria"
-                className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300 px-3 py-2  rounded-sm "
+                className="w-full bg-gray-100 text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300 px-3 py-2  rounded-sm "
                 
                 value={formik.values.categoria}
                 onChange={formik.handleChange}
@@ -278,25 +280,18 @@ const [categorias, setCategorias] = useState([])
               </div>
             ) : null} 
 
-            {/* <Input type="select" name="ccmonth" id="ccmonth" dropdown1 ={this.state.dropdown1}>
-    { this.state.dropdown1.map(dropdown => { 
-        return <option dropdown={dropdown} value={dropdown.value}>
-            {dropdown.show}</option>;
-        })
-    }
-</Input> */}
 
             {/* PRECIO */}
             <div className="mt-6 w-full text-gray-500 focus-within:text-violet-700">
               <label
-                className="w-full font-bold ease-in-out duration-300"
+                className="w-full font-bold ease-in-out duration-300 text-gray-100 tracking-wider"
                 htmlFor="precio"
               >
                 Precio
               </label>
 
               <input
-                className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm "
+                className="w-full bg-gray-100 text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm "
                 id="precio"
                 type="float"
                 placeholder="Sin el signo $"
@@ -320,14 +315,14 @@ const [categorias, setCategorias] = useState([])
             {/* TAGS */}
             <div className="mt-6 w-full text-gray-500 focus-within:text-violet-700">
               <label
-                className="w-full font-bold ease-in-out duration-300"
+                className="w-full font-bold ease-in-out duration-300 text-gray-100 tracking-wider"
                 htmlFor="tags"
               >
                 Tags
               </label>
 
               <textarea
-                className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm"
+                className="w-full bg-gray-100 text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm"
                 id="tags"
                 type="text"
                 placeholder="palabras clave para facilitar la búsqueda"
@@ -353,7 +348,7 @@ const [categorias, setCategorias] = useState([])
           </form>
         </div>
       </div>
-    </>
+    </Fade>
   );
 };
 

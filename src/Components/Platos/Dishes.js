@@ -2,20 +2,21 @@ import React, {useState, useEffect} from 'react';
 
 import { useNavigate } from 'react-router';
 
-import firebase from './util/firebaseConfig';
+import firebase from '../../util/Firebase/firebaseConfig';
 
-import ShowDish from './ShowDish';
+import ShowDish from '../../util/Platos/ShowDish';
 
-import ModificarPlato from './ModificarPlato';
+import ModificarPlato from '../../util/Platos/ModificarPlato';
 
 import _ from "lodash";
+import {Fade} from 'react-awesome-reveal'
 
 function Dishes() {
 
 const [datos, setDatos] = useState([])
 const [filtro, setFiltro] = useState('')
 
-
+const [categoriasOrdenadas, setCategoriasOrdenadas] = useState([])
 
 
 
@@ -26,19 +27,39 @@ const [idModificar, setIdModificar] = useState('')
 
 const [infoModificar, setInfoModificar] = useState({})
 
-
-
-
+// obtener datos de categorias
 
 useEffect(() => {
 
-    const obtenerPlato = () => {
-        firebase.db.collection('platos').onSnapshot(handleSnapshot); 
+    const obtenerCategorias = () => {
+        firebase.db.collection('categorias').onSnapshot(handleSnapshotCategorias); 
 
      }
-     obtenerPlato();
+     obtenerCategorias();
      
- }, [filtro]);
+ }, []);
+
+ const handleSnapshotCategorias = (snapshot) =>{
+  const categorias_list = snapshot.docs.map(doc => {
+      return {
+          id: doc.id,
+          ...doc.data()
+      }
+  });
+
+      const categorias_sorteadas = _.sortBy(categorias_list, 'posicion');
+      
+      const categoriasOrdenadasAux = [];
+      
+      categorias_sorteadas.map(cat=>(
+        categoriasOrdenadasAux.push(cat.nueva_categoria)
+      ))
+      
+      setCategoriasOrdenadas(categoriasOrdenadasAux)
+     
+     
+}
+
 
 // Snapshot permite manejar la base de datos en real time  
 
@@ -51,10 +72,23 @@ useEffect(() => {
      });
 
      const platos_filtrados = _.filter(dishes_list, dish => _.includes(_.lowerCase([ dish.categoria, dish.plato, dish.descripcion, dish.tags, dish.precio]), _.lowerCase(filtro)));
-     const platos_sorteados = _.sortBy(platos_filtrados, 'categoria', 'plato');
-     setDatos(platos_sorteados)   
- }
+     const platos_sorteados =_.sortBy(platos_filtrados, function(obj){ 
+        return _.indexOf(categoriasOrdenadas, obj.categoria);
+    });
+     setDatos(platos_sorteados)  
+    }
 
+    useEffect(() => {
+
+        const obtenerPlato = () => {
+            firebase.db.collection('platos').onSnapshot(handleSnapshot); 
+    
+         }
+         obtenerPlato();
+         
+     }, [filtro, categoriasOrdenadas]);
+
+ 
 
  const MostrarCategoria = (categoria, i) => {
 
@@ -87,7 +121,7 @@ return (
 
 
 
-<>
+<Fade>
 
 {modificar ? <ModificarPlato
 setModificar={setModificar}
@@ -95,6 +129,7 @@ modificar={modificar}
 idModificar={idModificar}
 infoModificar={infoModificar}/> 
 : 
+<Fade>
 < div className="bg-gray-800 min-h-screen pb-20">
 <h1 className="font-bold px-8 w-full text-center text-white text-xl py-6">
         {" "}
@@ -149,10 +184,11 @@ onClick={()=>navigate('/categories')}
 >Categorías</h1></div>
 
 </div>
+</Fade>
 
 
 }
-      </>  
+      </Fade>  
     )
 }
 

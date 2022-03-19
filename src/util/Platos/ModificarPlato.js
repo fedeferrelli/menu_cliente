@@ -1,84 +1,100 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import firebase from "../Firebase/firebaseConfig";
 
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import firebase from './util/firebaseConfig';
-import { useNavigate } from 'react-router-dom';
+import _ from "lodash";
+import { Fade } from "react-awesome-reveal";
 
-import FileUploader from 'react-firebase-file-uploader'
+import FileUploader from "react-firebase-file-uploader";
 
-const ModificarPlato = ({setModificar, modificar, idModificar, infoModificar}) =>{
+const ModificarPlato = ({
+  setModificar,
+  modificar,
+  idModificar,
+  infoModificar,
+}) => {
+  const { plato, categoria, precio, descripcion, image, tags, id } =
+    infoModificar.dish;
 
- const {plato, categoria, precio, descripcion, image, tags, id } = infoModificar.dish;
-   
+  const [categorias, setCategorias] = useState([]);
 
-   const navigate = useNavigate();
+  // states para las imagenes
 
-    // states para las imagenes
+  const [subiendo, setSubiendo] = useState(false);
 
-    const [subiendo, setSubiendo] = useState(false)
+  const [progreso, setProgreso] = useState(0);
 
-    const [progreso, setProgreso] = useState(0)
+  const [urlimagen, setUrlimagen] = useState(image);
 
-    const [urlimagen, setUrlimagen] = useState(image)
+  // obtener datos de categorias
 
-   
-    // validacion y leer datos de formulario
+  useEffect(() => {
+    const obtenerCategorias = () => {
+      firebase.db.collection("categorias").onSnapshot(handleSnapshot);
+    };
+    obtenerCategorias();
+  }, []);
 
-    const formik = useFormik({
-        initialValues:{
-            plato:plato,
-            categoria: categoria,
-            precio:precio,
-            descripcion: descripcion,
-            tags:tags
-        },
+  const handleSnapshot = (snapshot) => {
+    const categorias_list = snapshot.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+      };
+    });
 
+    const categorias_sorteadas = _.sortBy(categorias_list, "posicion");
+    setCategorias(categorias_sorteadas);
+  };
 
-        validationSchema: Yup.object({
-            plato: Yup.string()
-              .min(3, "Los nombres deben tener al menos 3 caracteres")
-              .required("El nombre es obligatorio"),
-      
-            precio: Yup.number()
-              .min(1, "Debes ingresar un numero")
-              .required("El precio es obligatorio"),
-      
-            categoria: Yup.string()
-              .min(3, "Los nombres deben tener al menos 1 caracter")
-              .required("La categoría es obligatoria"),
-      
-            descripcion: Yup.string()
-              .min(10, "La descripción debe tener al menos 10 caracteres")
-              .required("La descripción es obligatoria"),
-          }),
+  // validacion y leer datos de formulario
 
-        onSubmit: plato =>{
+  const formik = useFormik({
+    initialValues: {
+      plato: plato,
+      categoria: categoria,
+      precio: precio,
+      descripcion: descripcion,
+      tags: tags,
+    },
 
-            // evita ejecutarse mientras se está cragando la imagen
-            if (!subiendo){
-            try {
-                
-                plato.image = urlimagen;
-                firebase.db.collection('platos').doc(id).update(plato)
+    validationSchema: Yup.object({
+      plato: Yup.string()
+        .min(3, "Los nombres deben tener al menos 3 caracteres")
+        .required("El nombre es obligatorio"),
 
-                               
-            } catch (error) {
-                console.log(error)
-            } 
+      precio: Yup.number()
+        .min(1, "Debes ingresar un numero")
+        .required("El precio es obligatorio"),
 
-           }
-           setModificar(!modificar)
+      categoria: Yup.string()
+        .min(3, "Los nombres deben tener al menos 1 caracter")
+        .required("La categoría es obligatoria"),
+
+      descripcion: Yup.string()
+        .min(10, "La descripción debe tener al menos 10 caracteres")
+        .required("La descripción es obligatoria"),
+    }),
+
+    onSubmit: (plato) => {
+      // evita ejecutarse mientras se está cragando la imagen
+      if (!subiendo) {
+        try {
+          plato.image = urlimagen;
+          firebase.db.collection("platos").doc(id).update(plato);
+        } catch (error) {
+          console.log(error);
         }
+      }
+      setModificar(!modificar);
+    },
+  });
 
-    })
+  // Todo sobre las imagenes
 
-    
-
-// Todo sobre las imagenes
-
-const handleUploadStart = () => {
+  const handleUploadStart = () => {
     setProgreso(0);
     setSubiendo(true);
   };
@@ -98,14 +114,11 @@ const handleUploadStart = () => {
       .getDownloadURL();
 
     setUrlimagen(url);
-
-    console.log(url);
   };
-       
 
-    return(
-        <>
-     <h1 className="font-bold px-8 w-full text-center text-gray-700 text-xl">
+  return (
+    <Fade triggerOnce>
+      <h1 className="font-bold px-8 pt-6  w-full text-center bg-gray-800 text-gray-100 tracking-widest text-xl">
         {" "}
         Acá podés{" "}
         <span className="text-2xl block uppercase text-violet-600">
@@ -114,17 +127,16 @@ const handleUploadStart = () => {
         </span>
       </h1>
 
-      <div className="flex justify-center mt-12">
+      <div className="flex justify-center py-12 bg-gray-800">
         <div className=" w-full max-w-2xl">
           <form
             className="w-full px-4 flex flex-col justify-center items-center"
             onSubmit={formik.handleSubmit}
           >
-
-    {/* IMAGEN */}          
+            {/* IMAGEN */}
             <div className="w-full text-gray-500 focus-within:text-violet-700">
               <label
-                className="w-full font-bold ease-in-out duration-300"
+                className="w-full font-bold ease-in-out duration-300 text-gray-100 tracking-widest"
                 htmlFor="imagen"
               >
                 Imagen
@@ -139,7 +151,7 @@ const handleUploadStart = () => {
                 onUploadStart={handleUploadStart}
                 onUploadError={handleUploadError}
                 onUploadSuccess={handleUploadSuccess}
-                className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm "
+                className="w-full bg-gray-100 text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm "
               />
             </div>
 
@@ -161,18 +173,17 @@ const handleUploadStart = () => {
               </div>
             ) : null}
 
-    
-    {/* PLATO */}
+            {/* PLATO */}
             <div className="mt-6 w-full text-gray-500 focus-within:text-violet-700">
               <label
-                className="w-full font-bold ease-in-out duration-300"
+                className="w-full font-bold ease-in-out duration-300 text-gray-100 tracking-widest"
                 htmlFor="plato"
               >
                 Plato
               </label>
 
               <input
-                className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm "
+                className="w-full bg-gray-100 text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm "
                 id="plato"
                 type="text"
                 placeholder="Nombre"
@@ -192,17 +203,17 @@ const handleUploadStart = () => {
               </div>
             ) : null}
 
-    {/* DESCRIPCION */}            
+            {/* DESCRIPCION */}
             <div className="mt-6 w-full text-gray-500 focus-within:text-violet-700">
               <label
-                className="w-full font-bold ease-in-out duration-300"
+                className="w-full font-bold ease-in-out duration-300 text-gray-100 tracking-widest"
                 htmlFor="descripcion"
               >
                 Descripción del plato
               </label>
 
               <textarea
-                className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm"
+                className="w-full bg-gray-100 text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm"
                 id="descripcion"
                 type="text"
                 placeholder="Descripción"
@@ -222,26 +233,37 @@ const handleUploadStart = () => {
               </div>
             ) : null}
 
-    {/* CATEGORIA */}            
+            {/* CATEGORIA SELECT */}
             <div className="mt-6 w-full text-gray-500 focus-within:text-violet-700">
               <label
-                className="w-full font-bold ease-in-out duration-300"
-                htmlFor="categoria"
+                className="w-full font-bold ease-in-out duration-300 text-gray-100 tracking-widest"
+                htmlFor="categoria_select"
               >
                 Categoría
               </label>
 
-              <input
-                className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm "
+              <select
+                name="categoria"
                 id="categoria"
-                type="text"
-                placeholder="Sewcción del menú"
+                className="w-full bg-gray-100 text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300 px-3 py-2  rounded-sm "
                 value={formik.values.categoria}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-              />
+              >
+                <option value="" className="bg-slate-200 shadow-none">
+                  Seleccione una categoría{" "}
+                </option>
+                {categorias.map((categoria) => (
+                  <option
+                    key={Math.random()}
+                    value={categoria.nueva_categoria}
+                    className="bg-slate-200 capitalize"
+                  >
+                    {categoria.nueva_categoria}{" "}
+                  </option>
+                ))}
+              </select>
             </div>
-
             {formik.touched.categoria && formik.errors.categoria ? (
               <div
                 className="w-full mt-1 text-sm bg-red-100 border-l-4 border-red-500 text-red-700 p-2"
@@ -252,17 +274,17 @@ const handleUploadStart = () => {
               </div>
             ) : null}
 
-    {/* PRECIO */}
+            {/* PRECIO */}
             <div className="mt-6 w-full text-gray-500 focus-within:text-violet-700">
               <label
-                className="w-full font-bold ease-in-out duration-300"
+                className="w-full font-bold ease-in-out duration-300 text-gray-100 tracking-widest"
                 htmlFor="precio"
               >
                 Precio
               </label>
 
               <input
-                className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm "
+                className="w-full bg-gray-100 text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm "
                 id="precio"
                 type="float"
                 placeholder="Sin el signo $"
@@ -283,18 +305,17 @@ const handleUploadStart = () => {
               </div>
             ) : null}
 
-
-    {/* TAGS */}
+            {/* TAGS */}
             <div className="mt-6 w-full text-gray-500 focus-within:text-violet-700">
               <label
-                className="w-full font-bold ease-in-out duration-300"
+                className="w-full font-bold ease-in-out duration-300 text-gray-100 tracking-widest"
                 htmlFor="tags"
               >
                 Tags
               </label>
 
               <textarea
-                className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm"
+                className="w-full bg-gray-100 text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm"
                 id="tags"
                 type="text"
                 placeholder="palabras clave para facilitar la búsqueda"
@@ -312,7 +333,7 @@ const handleUploadStart = () => {
 
             <button
               className=" w-full h-12 rounded-sm px-6 py-2 mt-4 bg-red-700 font-bold uppercase text-white hover:bg-red-800 cursor-pointer"
-                onClick={()=>navigate('/')} 
+              onClick={() => setModificar(!modificar)}
             >
               {" "}
               cancelar{" "}
@@ -320,10 +341,8 @@ const handleUploadStart = () => {
           </form>
         </div>
       </div>
-
-        </>
-    );
-
+    </Fade>
+  );
 };
 
 export default ModificarPlato;

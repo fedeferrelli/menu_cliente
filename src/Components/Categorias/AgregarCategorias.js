@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-import firebase from "./util/firebaseConfig";
+import firebase from "../../util/Firebase/firebaseConfig";
 import { useNavigate } from 'react-router-dom';
+import { Fade } from "react-awesome-reveal";
 
 
 
@@ -52,8 +53,8 @@ function AgregarCategorias() {
   /*  const navigate  = useNavigate();
   */
    return (
-     <>
-       <h1 className="font-bold px-8 w-full text-center text-gray-700 text-xl">
+     <Fade triggerOnce>
+       <h1 className="font-bold px-8 pt-6 w-full text-center text-gray-100 tracking-wider bg-gray-800 text-xl">
          {" "}
          Acá podés administrar las{" "}
          <span className="text-2xl block uppercase text-violet-600">
@@ -62,7 +63,7 @@ function AgregarCategorias() {
          </span>
        </h1>
  
-       <div className="flex justify-center mt-12">
+       <div className="flex justify-center py-12 bg-gray-800 min-h-screen">
          <div className=" w-full max-w-2xl">
            <form
              className="w-full px-4 flex flex-col justify-center items-center"
@@ -73,14 +74,14 @@ function AgregarCategorias() {
              {/* CATEGORIA */}
              <div className="mt-6 w-full text-gray-500 focus-within:text-violet-700">
                <label
-                 className="w-full font-bold ease-in-out duration-300"
+                 className="w-full font-bold ease-in-out duration-300 text-gray-100 tracking-wider"
                  htmlFor="nueva_categoria"
                >
                  Nueva Categoria
                </label>
  
                <input
-                 className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm "
+                 className="w-full bg-gray-100 text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm "
                  id="nueva_categoria"
                  type="text"
                  placeholder="Nueva categoria"
@@ -103,14 +104,14 @@ function AgregarCategorias() {
              {/* POSICION */}
              <div className="mt-6 w-full text-gray-500 focus-within:text-violet-700">
                <label
-                 className="w-full font-bold ease-in-out duration-300"
+                 className="w-full font-bold ease-in-out duration-300 text-gray-100 tracking-wider"
                  htmlFor="posicion"
                >
                  Posicion
                </label>
  
                <input
-                 className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm "
+                 className="w-full bg-gray-100 text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm "
                  id="posicion"
                  type="float"
                  placeholder="Orden en el menu"
@@ -148,7 +149,7 @@ function AgregarCategorias() {
            </form>
          </div>
        </div>
-     </>
+     </Fade>
    );
 }
 

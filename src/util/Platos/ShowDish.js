@@ -1,5 +1,5 @@
 import React from "react";
-import firebase from './util/firebaseConfig'; 
+import firebase from '../Firebase/firebaseConfig'; 
 
 function ShowDish({ dish, setModificar, modificar, setIdModificar, setInfoModificar }) {
   const { image, plato, descripcion, precio, id } = dish;

@@ -3,13 +3,14 @@ import React, {useState, useEffect} from 'react';
 
 import { useNavigate } from 'react-router';
 
-import firebase from './util/firebaseConfig';
+import firebase from '../../util/Firebase/firebaseConfig';
 
 
 
-import ModificarCategoria from './ModificarCategoria';
+import ModificarCategoria from '../../util/Categorias/ModificarCategoria';
 
 import _ from "lodash";
+import { Fade } from 'react-awesome-reveal';
 
 
 function Categorias() {
@@ -18,16 +19,24 @@ function Categorias() {
 const [datosCategorias, setDatosCategorias] = useState([])
 const [filtroCategorias, setFiltroCategorias] = useState('')
 
-
 const [modificarCategoria, setModificarCategoria] = useState(false)
-
-const [idModificarCategoria, setIdModificarCategoria] = useState('')
 
 const [infoModificarCategoria, setInfoModificarCategoria] = useState({})
  
 
 
+const handleSnapshot = (snapshot) =>{
+  const categorias_list = snapshot.docs.map(doc => {
+      return {
+          id: doc.id,
+          ...doc.data()
+      }
+  });
 
+  const categorias_filtrados = _.filter(categorias_list, categoria => _.includes(_.lowerCase([ categoria.nueva_categoria]), _.lowerCase(filtroCategorias)));
+  const categorias_sorteadas = _.sortBy(categorias_filtrados, 'posicion');
+  setDatosCategorias(categorias_sorteadas)   
+}
 
 useEffect(() => {
 
@@ -36,23 +45,12 @@ useEffect(() => {
 
      }
      obtenerCategorias();
-     
- }, [filtroCategorias]);
+
+ },[filtroCategorias]);
 
 // Snapshot permite manejar la base de datos en real time  
 
- const handleSnapshot = (snapshot) =>{
-     const categorias_list = snapshot.docs.map(doc => {
-         return {
-             id: doc.id,
-             ...doc.data()
-         }
-     });
 
-     const categorias_filtrados = _.filter(categorias_list, categoria => _.includes(_.lowerCase([ categoria.nueva_categoria]), _.lowerCase(filtroCategorias)));
-     const categorias_sorteadas = _.sortBy(categorias_filtrados, 'posicion');
-     setDatosCategorias(categorias_sorteadas)   
- }
 
 
  // hook para redirecionar
@@ -80,11 +78,12 @@ const eliminarCategoria=(id, categoria)=>{
     }
 
 return (
-  <>
+  <Fade>
  {modificarCategoria ? <ModificarCategoria
 setModificarCategoria={setModificarCategoria}
 infoModificarCategoria={infoModificarCategoria} /> 
 : 
+<Fade>
     <div className="bg-gray-800 min-h-screen pb-20">
       <h1 className="font-bold px-8 w-full text-center text-white text-xl py-6">
         {" "}
@@ -151,8 +150,10 @@ onClick={()=>navigate('/')}
 >Menú</h1></div>
 
     </div>
+    </Fade>
 }
-  </>
+  </Fade>
+
 );
 }
 

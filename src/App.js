@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Dishes from "./Dishes";
-import NuevoPlato from "./NuevoPlato";
-import AgregarCategorias from './AgregarCategorias';
-import Categorias from './Categorias';
+import Dishes from "./Components/Platos/Dishes";
+import NuevoPlato from "./Components/Platos/NuevoPlato";
+import AgregarCategorias from './Components/Categorias/AgregarCategorias';
+import Categorias from './Components/Categorias/Categorias';
 
 function App() {
   return (

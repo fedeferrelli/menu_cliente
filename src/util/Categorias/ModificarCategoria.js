@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-import firebase from "./util/firebaseConfig";
-import { useNavigate } from 'react-router-dom';
+import firebase from "../Firebase/firebaseConfig";
+
+import { Fade } from "react-awesome-reveal";
 
 
 
@@ -12,10 +13,6 @@ function ModificarCategorias({setModificarCategoria, infoModificarCategoria}) {
 
   const {id, nueva_categoria, posicion} = infoModificarCategoria
   
-   // hook para redireccionar
- 
- const navigate = useNavigate();
- 
    // validacion y leer datos de formulario
  
    const formik = useFormik({
@@ -34,26 +31,26 @@ function ModificarCategorias({setModificarCategoria, infoModificarCategoria}) {
          .required("La ubicación es obligatorio")
      }),
  
-     onSubmit: async (categoria) => {
+     onSubmit: (categoria) => {
        try {
         
-         await firebase.db.collection("categorias").doc(id).update(categoria);
+         firebase.db.collection("categorias").doc(id).update(categoria);
          formik.resetForm();
+         setModificarCategoria(false)
         
        } catch (error) {
          console.log(error);
        }
-       setModificarCategoria(false)
+       
      },
+     
    });
  
  
-   // hook para redirecionar
-  /*  const navigate  = useNavigate();
-  */
+   
    return (
-     <>
-       <h1 className="font-bold px-8 w-full text-center text-gray-700 text-xl">
+     <Fade triggerOnce>
+       <h1 className="font-bold px-8 pt-6 w-full text-center text-gray-100 tracking-widest bg-gray-800 text-xl">
          {" "}
          Acá podés modificar las{" "}
          <span className="text-2xl block uppercase text-violet-600">
@@ -62,7 +59,7 @@ function ModificarCategorias({setModificarCategoria, infoModificarCategoria}) {
          </span>
        </h1>
  
-       <div className="flex justify-center mt-12">
+       <div className="flex justify-center pt-12 bg-gray-800 min-h-screen">
          <div className=" w-full max-w-2xl">
            <form
              className="w-full px-4 flex flex-col justify-center items-center"
@@ -73,14 +70,14 @@ function ModificarCategorias({setModificarCategoria, infoModificarCategoria}) {
              {/* CATEGORIA */}
              <div className="mt-6 w-full text-gray-500 focus-within:text-violet-700">
                <label
-                 className="w-full font-bold ease-in-out duration-300"
+                 className="w-full font-bold ease-in-out duration-300 text-gray-100 tracking-widest"
                  htmlFor="nueva_categoria"
                >
-                 Nueva Categoria
+                 Categoria a Modificar
                </label>
  
                <input
-                 className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm "
+                 className="w-full bg-gray-100 text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm "
                  id="nueva_categoria"
                  type="text"
                  placeholder="Nueva categoria"
@@ -103,14 +100,14 @@ function ModificarCategorias({setModificarCategoria, infoModificarCategoria}) {
              {/* POSICION */}
              <div className="mt-6 w-full text-gray-500 focus-within:text-violet-700">
                <label
-                 className="w-full font-bold ease-in-out duration-300"
+                 className="w-full font-bold ease-in-out duration-300 text-gray-100 tracking-widest"
                  htmlFor="posicion"
                >
                  Posicion
                </label>
  
                <input
-                 className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm "
+                 className="w-full bg-gray-100 text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm "
                  id="posicion"
                  type="float"
                  placeholder="Orden en el menu"
@@ -140,7 +137,7 @@ function ModificarCategorias({setModificarCategoria, infoModificarCategoria}) {
  
              <button
                className=" w-full h-12 rounded-sm px-6 py-2 mt-4 bg-red-700 font-bold uppercase text-white hover:bg-red-800 cursor-pointer"
-              onClick={() => navigate("/categories")}
+              onClick={() => setModificarCategoria(false)}
              >
                {" "}
                cancelar{" "}
@@ -148,7 +145,7 @@ function ModificarCategorias({setModificarCategoria, infoModificarCategoria}) {
            </form>
          </div>
        </div>
-     </>
+     </Fade>
    );
 }
 
