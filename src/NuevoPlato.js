@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -18,11 +18,32 @@ const NuevoPlato = () => {
 
   const [urlimagen, setUrlimagen] = useState("");
 
+const [categorias, setCategorias] = useState([])
 
+  // obtener datos de categorias
 
-  // hook para redireccionar
+  useEffect(() => {
 
-  /*  const navigate = useNavigate(); */
+    const obtenerCategorias = () => {
+        firebase.db.collection('categorias').onSnapshot(handleSnapshot); 
+
+     }
+     obtenerCategorias();
+     
+ }, []);
+
+ const handleSnapshot = (snapshot) =>{
+  const categorias_list = snapshot.docs.map(doc => {
+      return {
+          id: doc.id,
+          ...doc.data()
+      }
+  });
+
+      const categorias_sorteadas = _.sortBy(categorias_list, 'posicion');
+      setCategorias(categorias_sorteadas)     
+}
+
 
   // validacion y leer datos de formulario
 
@@ -113,8 +134,7 @@ const NuevoPlato = () => {
             className="w-full px-4 flex flex-col justify-center items-center"
             onSubmit={formik.handleSubmit}
           >
-
-    {/* IMAGEN */}          
+            {/* IMAGEN */}
             <div className="w-full text-gray-500 focus-within:text-violet-700">
               <label
                 className="w-full font-bold ease-in-out duration-300"
@@ -154,8 +174,7 @@ const NuevoPlato = () => {
               </div>
             ) : null}
 
-    
-    {/* PLATO */}
+            {/* PLATO */}
             <div className="mt-6 w-full text-gray-500 focus-within:text-violet-700">
               <label
                 className="w-full font-bold ease-in-out duration-300"
@@ -169,7 +188,7 @@ const NuevoPlato = () => {
                 id="plato"
                 type="text"
                 placeholder="Nombre"
-                value={formik.values.plato}
+                value={formik.values.plato.toLowerCase()}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               />
@@ -185,7 +204,7 @@ const NuevoPlato = () => {
               </div>
             ) : null}
 
-    {/* DESCRIPCION */}            
+            {/* DESCRIPCION */}
             <div className="mt-6 w-full text-gray-500 focus-within:text-violet-700">
               <label
                 className="w-full font-bold ease-in-out duration-300"
@@ -199,7 +218,7 @@ const NuevoPlato = () => {
                 id="descripcion"
                 type="text"
                 placeholder="Descripción"
-                value={formik.values.descripcion}
+                value={formik.values.descripcion.toLowerCase()}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               ></textarea>
@@ -211,30 +230,44 @@ const NuevoPlato = () => {
                 role="alert"
               >
                 <p className="font-bold"> Hubo un error: </p>
-                <p>{formik.errors.descripcion}</p>
+                <p>{formik.errors.descripcion.toLowerCase}</p>
               </div>
             ) : null}
 
-    {/* CATEGORIA */}            
+
+            {/* CATEGORIA SELECT */}
             <div className="mt-6 w-full text-gray-500 focus-within:text-violet-700">
               <label
                 className="w-full font-bold ease-in-out duration-300"
-                htmlFor="categoria"
+                htmlFor="categoria_select"
               >
                 Categoría
               </label>
 
-              <input
-                className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300  px-3 py-2 rounded-sm "
+              <select
+                name="categoria"
                 id="categoria"
-                type="text"
-                placeholder="Sewcción del menú"
+                className="w-full text-black border border-gray-400 outline-none  focus:border-violet-800 focus:shadow-md ease-in-out duration-300 px-3 py-2  rounded-sm "
+                
                 value={formik.values.categoria}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-              />
-            </div>
+              >
+                <option value="" className="bg-slate-200 shadow-none">
+                  Seleccione una categoría{" "}
+                </option>
+                {categorias.map((categoria) => (
+                  <option
+                    key={Math.random()}
+                    value={categoria.nueva_categoria}
+                    className="bg-slate-200 capitalize"
+                  >
+                    {categoria.nueva_categoria}{" "}
+                  </option>
+                ))}
+              </select>
 
+            </div>
             {formik.touched.categoria && formik.errors.categoria ? (
               <div
                 className="w-full mt-1 text-sm bg-red-100 border-l-4 border-red-500 text-red-700 p-2"
@@ -243,9 +276,17 @@ const NuevoPlato = () => {
                 <p className="font-bold"> Hubo un error: </p>
                 <p>{formik.errors.categoria}</p>
               </div>
-            ) : null}
+            ) : null} 
 
-    {/* PRECIO */}
+            {/* <Input type="select" name="ccmonth" id="ccmonth" dropdown1 ={this.state.dropdown1}>
+    { this.state.dropdown1.map(dropdown => { 
+        return <option dropdown={dropdown} value={dropdown.value}>
+            {dropdown.show}</option>;
+        })
+    }
+</Input> */}
+
+            {/* PRECIO */}
             <div className="mt-6 w-full text-gray-500 focus-within:text-violet-700">
               <label
                 className="w-full font-bold ease-in-out duration-300"
@@ -276,8 +317,7 @@ const NuevoPlato = () => {
               </div>
             ) : null}
 
-
-    {/* TAGS */}
+            {/* TAGS */}
             <div className="mt-6 w-full text-gray-500 focus-within:text-violet-700">
               <label
                 className="w-full font-bold ease-in-out duration-300"
@@ -291,7 +331,7 @@ const NuevoPlato = () => {
                 id="tags"
                 type="text"
                 placeholder="palabras clave para facilitar la búsqueda"
-                value={formik.values.tags}
+                value={formik.values.tags.toLowerCase()}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               ></textarea>
@@ -305,7 +345,7 @@ const NuevoPlato = () => {
 
             <button
               className=" w-full h-12 rounded-sm px-6 py-2 mt-4 bg-red-700 font-bold uppercase text-white hover:bg-red-800 cursor-pointer"
-                onClick={()=>navigate('/')} 
+              onClick={() => navigate("/")}
             >
               {" "}
               cancelar{" "}

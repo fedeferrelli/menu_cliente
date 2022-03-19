@@ -95,7 +95,7 @@ modificar={modificar}
 idModificar={idModificar}
 infoModificar={infoModificar}/> 
 : 
-< div className="bg-gray-800 min-h-screen pb-16">
+< div className="bg-gray-800 min-h-screen pb-20">
 <h1 className="font-bold px-8 w-full text-center text-white text-xl py-6">
         {" "}
         Acá podés ver{" "}
@@ -139,10 +139,18 @@ infoModificar={infoModificar}/>
          ))}
         </div>
 
-<div className="w-14 h-14 rounded-full bg-violet-700 fixed bottom-3 right-3 flex justify-center shadow-lg shadow-gray-500"><h1 className="m-auto text-white text-2xl text-center  align-middle"
+<div className="w-14 h-14 rounded-full bg-violet-700 fixed bottom-3 right-3 flex justify-center shadow-sm shadow-gray-500"><h1 className="m-auto text-white text-2xl text-center  align-middle"
 onClick={()=>navigate('/addDish')}
 >+</h1></div>
+
+
+<div className="w-32 h-10 rounded-xl bg-yellow-500 fixed bottom-5 left-3 flex justify-center shadow-sm px-4 shadow-gray-500"><h1 className="m-auto text-white text-lg text-center  align-middle"
+onClick={()=>navigate('/categories')}
+>Categorías</h1></div>
+
 </div>
+
+
 }
       </>  
     )
