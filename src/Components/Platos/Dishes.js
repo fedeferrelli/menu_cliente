@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router';
 
 import firebase from '../../util/Firebase/firebaseConfig';
 
+import {AiOutlinePlus} from 'react-icons/ai'
+
 import ShowDish from '../../util/Platos/ShowDish';
 
 import ModificarPlato from '../../util/Platos/ModificarPlato';
@@ -176,10 +178,10 @@ infoModificar={infoModificar}/>
 
 <div className="w-14 h-14 rounded-full bg-violet-700 fixed bottom-3 right-3 flex justify-center shadow-sm shadow-gray-500"><h1 className="m-auto text-white text-2xl text-center  align-middle"
 onClick={()=>navigate('/addDish')}
->+</h1></div>
+><AiOutlinePlus/></h1></div>
 
 
-<div className="w-32 h-10 rounded-xl bg-yellow-500 fixed bottom-5 left-3 flex justify-center shadow-sm px-4 shadow-gray-500"><h1 className="m-auto text-white text-lg text-center  align-middle"
+<div className="w-32 h-14 rounded-xl bg-yellow-500 fixed bottom-3 left-3 flex justify-center shadow-sm px-4 shadow-gray-500"><h1 className="m-auto text-white text-lg text-center  align-middle"
 onClick={()=>navigate('/categories')}
 >Categorías</h1></div>
 

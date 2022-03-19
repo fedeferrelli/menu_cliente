@@ -75,13 +75,13 @@ const modificarPlato = (id) => {
       <div className="flex flex-row justify-evenly py-2 text-grey-500">
       <div className=
       { dish.existencia==='si' ?
-      "w-1/4 h-8 rounded-md text-center flex border border-green-700 bg-gray-200"
+      "w-1/4 h-8 rounded-md text-center flex border text-gray-600 border-green-300 bg-green-200/40"
     :
     "w-1/4 h-8 rounded-md text-center text-white flex border border-red-700 bg-red-500"
   }
       onClick={()=>cambiarStock(id, dish)} ><div className="m-auto">{dish.existencia==='si' ? 'En Stock' : 'Sin Stock'}</div></div>
-      <div className="w-1/4 h-8 rounded-md text-center flex border border-blue-700 bg-gray-200" onClick={()=>modificarPlato(id)}><div className="m-auto"> modificar </div></div>
-      <div className="w-1/4 w- h-8 rounded-md  text-center flex border border-red-700 bg-gray-200" onClick={()=>eliminarPlato(id)}><div className="m-auto">eliminar</div></div>
+      <div className="w-1/4 h-8 rounded-md text-center flex border text-gray-600 border-blue-300 bg-blue-200/40" onClick={()=>modificarPlato(id)}><div className="m-auto"> modificar </div></div>
+      <div className="w-1/4 w- h-8 rounded-md  text-center flex border text-gray-600 border-red-300 bg-red-200/40" onClick={()=>eliminarPlato(id)}><div className="m-auto">eliminar</div></div>
      
       </div>
     </div>

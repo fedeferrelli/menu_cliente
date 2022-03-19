@@ -1,5 +1,6 @@
 
 import React, {useState, useEffect} from 'react';
+import {AiOutlinePlus} from 'react-icons/ai'
 
 import { useNavigate } from 'react-router';
 
@@ -110,22 +111,25 @@ infoModificarCategoria={infoModificarCategoria} />
             key={Math.random()}
             className="w-full text-gray-700 bg-gray-200 rounded-lg m-2 px-2 py-3 sm:w-1/5 flex flex-row justify-between"
           >
-              <div>
+            
+              <h1 className="h-full py-1">
                   {categoria.posicion}.{" "}
             <span className="font-bold capitalize">
               {categoria.nueva_categoria}
-            </span> </div>
+            </span> </h1>
+
+            
 
             <div className="flex flex-row">
             <div
-              className="px-2 mr-2 h-8 rounded-md text-center flex border border-blue-700 bg-gray-200" onClick={(e)=>{modificarCategoriaFn(categoria)}}
+              className="px-2 mr-2 h-8 rounded-md text-center flex border text-gray-600 border-blue-300 bg-blue-200/40" onClick={(e)=>{modificarCategoriaFn(categoria)}}
             >
                
 
               <div className="m-auto"> modificar </div>
             </div>
             <div
-              className="px-2 w- h-8 rounded-md  text-center flex border border-red-700 bg-gray-200"
+              className="px-2 h-8 rounded-md text-gray-600  text-center flex border border-red-300 bg-red-200/40"
               onClick={() =>
                 eliminarCategoria(categoria.id, categoria.nueva_categoria)
               }
@@ -141,11 +145,11 @@ infoModificarCategoria={infoModificarCategoria} />
           className="m-auto text-white text-2xl text-center  align-middle"
           onClick={() => navigate("/addNewCategory")}
         >
-          +
+         <AiOutlinePlus/>
         </h1>
       </div>
 
-      <div className="w-32 h-10 rounded-xl bg-yellow-500 fixed bottom-5 left-3 flex justify-center shadow-sm  shadow-gray-500"><h1 className="m-auto text-white text-lg text-center  align-middle"
+      <div className="w-32 h-14 rounded-xl bg-yellow-500 fixed bottom-3 left-3 flex justify-center shadow-sm  shadow-gray-500"><h1 className="m-auto text-white text-lg text-center  align-middle"
 onClick={()=>navigate('/')}
 >Menú</h1></div>
 
