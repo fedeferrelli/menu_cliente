@@ -43,28 +43,28 @@ const modificarPlato = (id) => {
 
   return (
     <div className={ dish.existencia === 'si' ? 
-    "w-full  sm:w-full  sm:h-96 flex flex-col sm:flex-col overflow-hidden my-4 mx-0 box-border rounded-md shadow-lg border border-gray-400 bg-gray-300" 
+    "w-full  flex flex-col  my-1 rounded-md shadow-lg border border-gray-400 bg-gray-300" 
      : 
-    "w-full  sm:w-full  sm:h-96 flex flex-col sm:flex-col overflow-hidden my-4 mx-0 box-border rounded-md shadow-lg border border-gray-400 bg-red-200 "} >
+    "w-full  flex flex-col  my-1 rounded-md shadow-lg border border-gray-400 bg-red-200 "} >
   
-     <div  className="w-full sm:w-full  flex flex-row sm:flex-col overflow-hidden box-border">
+     <div  className="w-full flex flex-row ">
 
 
 
       <img
         src={image}
-        className="min-w-28 sm:w-40 h-28 sm:h-40 p-1 rounded-md  "
+        className="min-w-28 h-28 p-1 rounded-md  "
         alt="plato_img"
       />
 
-      <div className="w-3/4 sm:w-full h-full p-1">
+      <div className="w-3/4 h-full p-1">
         
         <div className="text-xl text-gray-700 font-bold capitalize">{plato}</div>
 
         <div className="flex  text-gray-500">{descripcion.length < 37 ? descripcion : `${descripcion.slice(0, 37)}...`}  </div>
       </div>
 
-      <div className=" h-full w-1/4 sm:w-full  p-1 flex flex-col justify-between items-center">
+      <div className=" h-full w-1/4 p-1 flex flex-col justify-between items-center">
 
       <div className="text-xl font-bold text-gray-700">${precio}</div>
 
@@ -75,15 +75,18 @@ const modificarPlato = (id) => {
       <div className="flex flex-row justify-evenly py-2 text-grey-500">
       <div className=
       { dish.existencia==='si' ?
-      "w-1/4 h-8 rounded-md text-center flex border text-gray-600 border-green-300 bg-green-200/40"
+      "w-1/4 h-8 rounded-md text-center flex border text-gray-600 border-green-500 cursor-pointer"
     :
-    "w-1/4 h-8 rounded-md text-center text-white flex border border-red-700 bg-red-500"
+    "w-1/4 h-8 rounded-md text-center text-white flex border border-red-700 bg-red-500 cursor-pointer"
   }
       onClick={()=>cambiarStock(id, dish)} ><div className="m-auto">{dish.existencia==='si' ? 'En Stock' : 'Sin Stock'}</div></div>
-      <div className="w-1/4 h-8 rounded-md text-center flex border text-gray-600 border-blue-300 bg-blue-200/40" onClick={()=>modificarPlato(id)}><div className="m-auto"> modificar </div></div>
-      <div className="w-1/4 w- h-8 rounded-md  text-center flex border text-gray-600 border-red-300 bg-red-200/40" onClick={()=>eliminarPlato(id)}><div className="m-auto">eliminar</div></div>
+      <div className="w-1/4 h-8 rounded-md text-center flex border text-gray-600 border-blue-500 cursor-pointer" onClick={()=>modificarPlato(id)}><div className="m-auto"> Modificar </div></div>
+      <div className="w-1/4 w- h-8 rounded-md  text-center flex border text-gray-600 border-red-500 cursor-pointer" onClick={()=>eliminarPlato(id)}><div className="m-auto">Eliminar</div></div>
      
       </div>
+
+
+      
     </div>
   );
 }

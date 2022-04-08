@@ -99,14 +99,14 @@ useEffect(() => {
 
     if(categoriaAnterior!==_.lowerCase(categoria)){
         return(
-            <div className="text-white bg-violet-600 font-bold font-sans text-2xl text-center  capitalize rounded-md py-2 mt-1 z-50" >{categoria} </div>
+            <div className="text-gray-200 bg-violet-600 font-bold font-sans text-2xl text-center block w-full capitalize rounded-md py-2 mt-1 z-50" >{categoria} </div>
         )
     }
 else return
 }
     else{
         return(
-            <div className="text-white bg-violet-600 font-bold font-sans text-2xl text-center  capitalize rounded-md py-2 z-50" >{categoria} </div>
+            <div className="text-gray-200 bg-violet-600 font-bold font-sans text-2xl text-center block capitalize rounded-md py-2 z-50" >{categoria} </div>
 
         )
     }
@@ -122,7 +122,7 @@ else return
 return (
 
 
-
+<div className="w-full">
 <Fade>
 
 {modificar ? <ModificarPlato
@@ -132,7 +132,7 @@ idModificar={idModificar}
 infoModificar={infoModificar}/> 
 : 
 <Fade>
-< div className="bg-gray-800 min-h-screen pb-20">
+< div className="bg-gray-800 min-h-screen pb-20 sm:pb-16">
 <h1 className="font-bold px-8 w-full text-center text-white text-xl py-6">
         {" "}
         Acá podés ver{" "}
@@ -142,12 +142,12 @@ infoModificar={infoModificar}/>
         </span>
       </h1>
 
-        <div className="mb-4 bg-white/75 px-2  sticky top-0 z-50 bg-gray-900">
+        <div className="mb-4 p-2  sticky top-0 z-50 bg-gray-800 flex">
 
 
     
 
-        <input className="shadow italic appearance-none border rounded w-full py-3 px-3 mt-1 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:border-violet-700 focus:shadow-none "
+        <input className="shadow italic appearance-none border rounded w-full py-3 px-3 m-auto text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:border-violet-700 focus:shadow-none "
         id="buscar"
         type="text"
         placeholder="Buscar"
@@ -158,14 +158,16 @@ infoModificar={infoModificar}/>
 
     </div>
 
-        <div className="flex flex-wrap justify-center w-full">
+        <div className="flex w-full flex-col  bg-gray-800">
          {datos.map((dish,i) =>(
-         <div key={Math.random()} className="w-full px-2 sm:w-1/5">   
+         <div key={Math.random()} >   
           <div className="sticky top-14">
           
           { MostrarCategoria(dish.categoria, i)}
            </div>
-          <ShowDish  
+
+           <div className="w-full">
+          <ShowDish
           dish={dish}
           setModificar={setModificar}
           modificar={modificar}
@@ -173,17 +175,20 @@ infoModificar={infoModificar}/>
           setInfoModificar={setInfoModificar}
           />
           </div>
+          </div>
          ))}
         </div>
 
-<div className="w-14 h-14 rounded-full bg-violet-700 fixed bottom-3 right-3 flex justify-center shadow-sm shadow-gray-500"><h1 className="m-auto text-white text-2xl text-center  align-middle"
-onClick={()=>navigate('/addDish')}
+<div className="w-14 h-14 rounded-full bg-violet-700 fixed bottom-3 right-3 sm:right-48 flex justify-center shadow-sm shadow-gray-500 cursor-pointer" onClick={()=>navigate('/addDish')}><h1 className="m-auto text-white text-2xl text-center  align-middle"
+
 ><AiOutlinePlus/></h1></div>
 
 
-<div className="w-32 h-14 rounded-xl bg-yellow-500 fixed bottom-3 left-3 flex justify-center shadow-sm px-4 shadow-gray-500"><h1 className="m-auto text-white text-lg text-center  align-middle"
-onClick={()=>navigate('/categories')}
+<div className="w-32 h-14 rounded-xl bg-yellow-500 fixed bottom-3 left-3 sm:left-48 flex justify-center shadow-sm px-4 shadow-gray-500 cursor-pointer" onClick={()=>navigate('/categories')}><h1 className="m-auto text-white text-lg text-center  align-middle"
+
 >Categorías</h1></div>
+
+
 
 </div>
 </Fade>
@@ -191,6 +196,7 @@ onClick={()=>navigate('/categories')}
 
 }
       </Fade>  
+      </div>
     )
 }
 

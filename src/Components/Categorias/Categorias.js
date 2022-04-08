@@ -85,7 +85,7 @@ setModificarCategoria={setModificarCategoria}
 infoModificarCategoria={infoModificarCategoria} /> 
 : 
 <Fade>
-    <div className="bg-gray-800 min-h-screen pb-20">
+    <div className="bg-gray-800 min-h-screen pb-20 max-w-[540px]">
       <h1 className="font-bold px-8 w-full text-center text-white text-xl py-6">
         {" "}
         Acá podés ver y administar{" "}
@@ -109,7 +109,7 @@ infoModificarCategoria={infoModificarCategoria} />
         {datosCategorias.map((categoria) => (
           <div
             key={Math.random()}
-            className="w-full text-gray-700 bg-gray-200 rounded-lg m-2 px-2 py-3 sm:w-1/5 flex flex-row justify-between"
+            className="w-full text-gray-700 bg-gray-200 rounded-lg m-2 px-2 py-3 flex flex-row justify-between"
           >
             
               <h1 className="h-full py-1">
@@ -122,14 +122,14 @@ infoModificarCategoria={infoModificarCategoria} />
 
             <div className="flex flex-row">
             <div
-              className="px-2 mr-2 h-8 rounded-md text-center flex border text-gray-600 border-blue-300 bg-blue-200/40" onClick={(e)=>{modificarCategoriaFn(categoria)}}
+              className="px-2 mr-2 h-8 rounded-md text-center flex border text-gray-600 border-blue-500 cursor-pointer" onClick={(e)=>{modificarCategoriaFn(categoria)}}
             >
                
 
               <div className="m-auto"> modificar </div>
             </div>
             <div
-              className="px-2 h-8 rounded-md text-gray-600  text-center flex border border-red-300 bg-red-200/40"
+              className="px-2 h-8 rounded-md text-gray-600  text-center flex border border-red-500 cursor-pointer"
               onClick={() =>
                 eliminarCategoria(categoria.id, categoria.nueva_categoria)
               }
@@ -140,17 +140,17 @@ infoModificarCategoria={infoModificarCategoria} />
         ))}
       </div>
 
-      <div className="w-14 h-14 rounded-full bg-violet-700 fixed bottom-3 right-3 flex justify-center shadow-sm  shadow-gray-500">
+      <div className="w-14 h-14 rounded-full bg-violet-700 fixed bottom-3 right-3 sm:right-48 flex justify-center shadow-sm  shadow-gray-500 cursor-pointer"  onClick={() => navigate("/addNewCategory")} >
         <h1
           className="m-auto text-white text-2xl text-center  align-middle"
-          onClick={() => navigate("/addNewCategory")}
+         
         >
          <AiOutlinePlus/>
         </h1>
       </div>
 
-      <div className="w-32 h-14 rounded-xl bg-yellow-500 fixed bottom-3 left-3 flex justify-center shadow-sm  shadow-gray-500"><h1 className="m-auto text-white text-lg text-center  align-middle"
-onClick={()=>navigate('/')}
+      <div className="w-32 h-14 rounded-xl bg-yellow-500 fixed bottom-3 left-3 sm:left-48 flex justify-center shadow-sm  shadow-gray-500 cursor-pointer" onClick={()=>navigate('/')}><h1 className="m-auto text-white text-lg text-center  align-middle"
+
 >Menú</h1></div>
 
     </div>

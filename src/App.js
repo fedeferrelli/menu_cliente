@@ -6,19 +6,23 @@ import Categorias from './Components/Categorias/Categorias';
 
 function App() {
   return (
+    <div className="bg-gray-800 flex">
+    <div className="max-w-[540px] m-auto">
     <Router>
 
     <Routes>
-
+    <Route path='/' exact element={<Dishes/>} /> 
       <Route path='/categories' exact element={<Categorias/>}  />
       <Route path='/addNewCategory' exact element={<AgregarCategorias/>}  />
       
       <Route path='/addDish' exact element={<NuevoPlato/>}  />
-     <Route path='/' exact element={<Dishes/>}   />
+      
 
     </Routes>
 
   </Router>
+  </div>
+  </div>
   );
 }
 

@@ -220,7 +220,7 @@ const [categorias, setCategorias] = useState([])
                 id="descripcion"
                 type="text"
                 placeholder="Descripción"
-                value={formik.values.descripcion.toLowerCase()}
+                value={formik.values.descripcion}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               ></textarea>
