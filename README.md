@@ -1,6 +1,6 @@
 # Menu
 
-Esta aplicación creada con React es parte de un set de administración de menues. Particularmente, esta aplicación es el POV del administrador del menu y está optimizada para móviles (se trata de darle apariencia de una mobile-app aunque también puede operarse en dispositivos de mayor width).
+Esta aplicación creada con React es parte de un set de administración de menues. Particularmente, esta aplicación es el POV del administrador del menú y está optimizada para móviles (se trata de darle apariencia de una mobile-app aunque también puede operarse en dispositivos de mayor width).
 
 Consta de 2 pantallas principales: 1) pantalla de menu y 2) pantalla de categorías.
 
@@ -32,3 +32,7 @@ Acá se pueden crear, eliminar y/o modificar las categorías a las que pertenece
 
 Recordá que está optimizada para versión mobile.
 Podés acceder desde [acá](https://menu-cliente-fedeferrelli.vercel.app/)
+
+## Screens
+
+![ScrennShot](https://user-images.githubusercontent.com/73478943/164908958-00ce355c-a3e2-421a-918d-63676c8eb98d.jpg)
