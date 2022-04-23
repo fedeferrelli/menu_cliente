@@ -142,7 +142,7 @@ infoModificar={infoModificar}/>
         </span>
       </h1>
 
-        <div className="mb-4 p-2  sticky top-0 z-50 bg-gray-800 flex">
+        <div className="mb-4 sticky top-0 z-50 bg-gray-800 flex">
 
 
     
